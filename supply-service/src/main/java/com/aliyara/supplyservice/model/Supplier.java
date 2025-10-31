@@ -3,6 +3,8 @@ package com.aliyara.supplyservice.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,4 +31,7 @@ public class Supplier {
 
     @Column (name = "lead_time")
     private Integer leadTime;
+
+    @OneToMany (mappedBy = "supplier")
+    private List<Material> materials;
 }

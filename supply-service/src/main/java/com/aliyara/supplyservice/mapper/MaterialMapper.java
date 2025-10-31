@@ -1,11 +1,17 @@
 package com.aliyara.supplyservice.mapper;
 
-import com.aliyara.supplyservice.dto.request.SupplierRequestDTO;
-import com.aliyara.supplyservice.dto.response.SupplierResponseDTO;
+import com.aliyara.supplyservice.dto.request.MaterialRequestDTO;
+import com.aliyara.supplyservice.dto.response.MaterialResponseDTO;
+import com.aliyara.supplyservice.model.Material;
 import com.aliyara.supplyservice.model.Supplier;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface MaterialMapper {
-
+    MaterialResponseDTO toResponse(Material material);
+    Material toEntity(MaterialRequestDTO requestDTO);
+    @Mapping(target = "id", ignore = true)
+    void updateEntityFromDto(MaterialRequestDTO requestDTO, @MappingTarget Material material);
 }

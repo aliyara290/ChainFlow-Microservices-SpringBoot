@@ -26,6 +26,10 @@ public class Material {
 
     private String unit;
 
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
+
     @OneToMany (mappedBy = "material")
     private List<OrderMaterial> orderMaterials = new ArrayList<>();
 }

@@ -14,9 +14,19 @@ public class GlobalExceptionHandler {
         ApiResponse<Void> response = new ApiResponse<>(false, ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+    @ExceptionHandler(MaterialNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleMaterialNotFound(MaterialNotFoundException ex) {
+        ApiResponse<Void> response = new ApiResponse<>(false, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 
     @ExceptionHandler(NoSupplierFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handleNoSupplierFoundException(NoSupplierFoundException ex) {
+        ApiResponse<Void> response = new ApiResponse<>(false, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+    @ExceptionHandler(NoMaterialsFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleNoMaterialsFoundException(NoMaterialsFoundException ex) {
         ApiResponse<Void> response = new ApiResponse<>(false, ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
