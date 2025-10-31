@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: supply-service
+  
+  datasource:
+#    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://supply-db:5432/supply_db}
+#    username: ${SPRING_DATASOURCE_USERNAME:aliyara29}
+#    password: ${SPRING_DATASOURCE_PASSWORD:Yara2001}
+    url: jdbc:postgresql://localhost:5432/supply_db
+    username: aliyara29
+    password: Yara2001
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.application.name}
