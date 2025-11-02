@@ -1,4 +1,7 @@
 package com.aliyara.supplyservice.service.interfaces;
 
-public interface OrderService {
+import com.aliyara.supplyservice.dto.request.OrderRequestDTO;
+import com.aliyara.supplyservice.dto.response.OrderResponseDTO;
+
+public interface OrderService extends GenericService<OrderResponseDTO, OrderRequestDTO> {
 }

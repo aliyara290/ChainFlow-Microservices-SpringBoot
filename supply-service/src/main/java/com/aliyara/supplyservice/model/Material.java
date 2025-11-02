@@ -2,7 +2,6 @@ package com.aliyara.supplyservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,8 @@ public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
+    private String name;
 
     @Column (name = "stock", nullable = false)
     private Integer stock;

@@ -13,6 +13,7 @@ import com.aliyara.supplyservice.model.Supplier;
 import com.aliyara.supplyservice.payload.ApiResponse;
 import com.aliyara.supplyservice.repository.MaterialRepository;
 import com.aliyara.supplyservice.service.interfaces.MaterialService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class MaterialServiceImpl implements MaterialService {
     private final MaterialRepository materialRepository;

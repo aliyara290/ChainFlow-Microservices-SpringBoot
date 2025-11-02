@@ -9,6 +9,7 @@ import com.aliyara.supplyservice.model.Supplier;
 import com.aliyara.supplyservice.payload.ApiResponse;
 import com.aliyara.supplyservice.repository.SupplierRepository;
 import com.aliyara.supplyservice.service.interfaces.SupplierService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class SupplierServiceImpl implements SupplierService {
 

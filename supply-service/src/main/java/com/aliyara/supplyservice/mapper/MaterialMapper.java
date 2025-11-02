@@ -10,8 +10,18 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface MaterialMapper {
+    @Mapping(source = "supplier.id", target = "supplierId")
     MaterialResponseDTO toResponse(Material material);
+    @Mapping(source = "supplierId", target = "supplier")
     Material toEntity(MaterialRequestDTO requestDTO);
     @Mapping(target = "id", ignore = true)
     void updateEntityFromDto(MaterialRequestDTO requestDTO, @MappingTarget Material material);
+    default Supplier mapSupplier(String supplierId) {
+        if (supplierId == null) {
+            return null;
+        }
+        Supplier supplier = new Supplier();
+        supplier.setId(supplierId);
+        return supplier;
+    }
 }

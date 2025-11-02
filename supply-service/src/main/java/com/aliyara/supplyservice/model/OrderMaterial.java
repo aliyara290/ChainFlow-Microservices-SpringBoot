@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @Setter
 @Getter
-@Table
-@Entity (name = "order_material")
+@Entity
+@Table (name = "order_materials")
 public class OrderMaterial {
     @Id
     @GeneratedValue (strategy = GenerationType.UUID)
@@ -27,18 +27,18 @@ public class OrderMaterial {
     private Integer quantity;
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof OrderMaterial)) return false;
-        OrderMaterial that = (OrderMaterial) o;
-        return order != null && order.equals(that.getOrder()) &&
-                material != null && material.equals(that.getMaterial());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof OrderMaterial)) return false;
+//        OrderMaterial that = (OrderMaterial) o;
+//        return order != null && order.equals(that.getOrder()) &&
+//                material != null && material.equals(that.getMaterial());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return getClass().hashCode();
+//    }
 
 }

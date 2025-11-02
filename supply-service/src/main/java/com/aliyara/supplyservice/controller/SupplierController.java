@@ -2,7 +2,6 @@ package com.aliyara.supplyservice.controller;
 
 import com.aliyara.supplyservice.dto.request.SupplierRequestDTO;
 import com.aliyara.supplyservice.dto.response.SupplierResponseDTO;
-import com.aliyara.supplyservice.model.Supplier;
 import com.aliyara.supplyservice.payload.ApiResponse;
 import com.aliyara.supplyservice.service.interfaces.SupplierService;
 import jakarta.validation.Valid;
@@ -42,7 +41,7 @@ public class SupplierController {
         return  ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<SupplierResponseDTO>> updateSupplier(@PathVariable String id, @RequestBody SupplierRequestDTO requestDTO) {
         SupplierResponseDTO updatedSupplier = supplierService.update(id, requestDTO);
         ApiResponse<SupplierResponseDTO> response = new ApiResponse<>(true, "Supplier updated successfully", updatedSupplier);

@@ -20,21 +20,25 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column (name = "order_date")
+    @Column(name = "order_date")
     private LocalDate orderDate = LocalDate.now();
 
-    @Column (name = "supplier_id", nullable = false)
-    private String supplier_id;
+    @Column(name = "supplier_id", nullable = false)
+    private String supplierId;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private OrderStatus status = OrderStatus.PENDING;
 
-    @OneToMany (mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderMaterial> orderMaterials = new ArrayList<>();
 
+    public void addMaterial(Material material, Integer quantity) {
+        OrderMaterial orderMaterial = new OrderMaterial();
+        orderMaterial.setOrder(this);
+        orderMaterial.setMaterial(material);
+        orderMaterial.setQuantity(quantity);
 
-    public void addMaterial(Material material, Integer quantity){
-
+        this.orderMaterials.add(orderMaterial);
     }
 
 }
