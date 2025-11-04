@@ -36,24 +36,24 @@ services:
       timeout: 5s
       retries: 5
 
-  #  production-db:
-  #    image: postgres:15-alpine
-  #    container_name: production-db
-  #    environment:
-  #      POSTGRES_DB: production_db
-  #      POSTGRES_USER: aliyara29
-  #      POSTGRES_PASSWORD: Yara2001
-  #    ports:
-  #      - "5433:5432"
-  #    volumes:
-  #      - production-data:/var/lib/postgresql/data
-  #    networks:
-  #      - microservices-network
-  #    healthcheck:
-  #      test: ["CMD-SHELL", "pg_isready -U production_user"]
-  #      interval: 10s
-  #      timeout: 5s
-  #      retries: 5
+  production-db:
+    image: postgres:15-alpine
+    container_name: production-db
+    environment:
+      POSTGRES_DB: production_db
+      POSTGRES_USER: aliyara29
+      POSTGRES_PASSWORD: Yara2001
+    ports:
+      - "5433:5432"
+    volumes:
+      - production-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U production_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   #  customer-db:
   #    image: postgres:15-alpine
@@ -163,6 +163,6 @@ networks:
 
 volumes:
   supply-data:
-  #  production-data:
+  production-data:
   #  customer-data:
   pgadmin-data:

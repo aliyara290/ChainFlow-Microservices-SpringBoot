@@ -10,6 +10,7 @@ import com.aliyara.supplyservice.exception.SupplierNotFoundException;
 import com.aliyara.supplyservice.mapper.OrderMapper;
 import com.aliyara.supplyservice.model.Material;
 import com.aliyara.supplyservice.model.Order;
+import com.aliyara.supplyservice.model.enums.OrderStatus;
 import com.aliyara.supplyservice.payload.ApiResponse;
 import com.aliyara.supplyservice.repository.MaterialRepository;
 import com.aliyara.supplyservice.repository.OrderRepository;
@@ -18,6 +19,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +34,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponseDTO create(OrderRequestDTO requestDTO) {
-        Order order = new Order();
-        order.setSupplierId(requestDTO.getSupplierId());
+        Order order = Order.builder().supplierId(requestDTO.getSupplierId()).orderDate(LocalDate.now()).status(OrderStatus.PENDING).orderMaterials(new ArrayList<>()).build();
+
 
         for (OrderMaterialRequestDTO item : requestDTO.getMaterials()) {
             Material material = materialRepository.findById(item.getMaterialId()).orElseThrow(() -> new MaterialNotFoundException(item.getMaterialId()));
@@ -45,12 +48,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponseDTO update(String id, OrderRequestDTO requestDTO) {
         Order existingOrder = orderRepository.findById(id).orElseThrow(() -> new SupplierNotFoundException(id));
+        existingOrder.getOrderMaterials().clear();
         for (OrderMaterialRequestDTO item : requestDTO.getMaterials()) {
             Material material = materialRepository.findById(item.getMaterialId()).orElseThrow(() -> new MaterialNotFoundException(item.getMaterialId()));
             existingOrder.addMaterial(material, item.getQuantity());
         }
         orderMapper.updateEntityFromDto(requestDTO, existingOrder);
-        return orderMapper.toResponse(existingOrder);
+        Order savedOrder = orderRepository.saveAndFlush(existingOrder);
+        return orderMapper.toResponse(savedOrder);
     }
 
     @Override
