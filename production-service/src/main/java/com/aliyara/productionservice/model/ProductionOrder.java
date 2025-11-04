@@ -17,7 +17,7 @@ import java.util.List;
 public class ProductionOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private int id;
+    private String id;
 
     @Enumerated(EnumType.STRING)
     private ProductionOrderStatus status;
@@ -31,8 +31,8 @@ public class ProductionOrder {
     @Column(nullable = false, name = "end_date")
     private LocalDate endDate;
 
-    @OneToMany
-    @JoinColumn(name = "product_id", nullable = false)
-    private List<Product> product;
+//    @OneToMany
+//    @JoinColumn(name = "product_id", nullable = false)
+//    private List<Product> product;
 
 }

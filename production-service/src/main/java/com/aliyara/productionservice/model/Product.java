@@ -2,18 +2,19 @@ package com.aliyara.productionservice.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Data
 @Entity
 @Table (name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private int id;
+    private String id;
 
     @Column(nullable = false)
     private String name;
@@ -27,6 +28,6 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-    @OneToMany(mappedBy = "product")
-    private List<BOM> BillOfMaterials;
+//    @OneToMany(mappedBy = "product")
+//    private List<BOM> BillOfMaterials;
 }

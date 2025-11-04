@@ -3,14 +3,15 @@ package com.aliyara.productionservice.service.impl;
 
 import com.aliyara.productionservice.dto.request.ProductRequestDTO;
 import com.aliyara.productionservice.dto.response.ProductResponseDTO;
+import com.aliyara.productionservice.exception.RecordNotFoundException;
 import com.aliyara.productionservice.mapper.ProductMapper;
+import com.aliyara.productionservice.model.Product;
 import com.aliyara.productionservice.payload.ApiResponse;
 import com.aliyara.productionservice.repository.ProductRepository;
 import com.aliyara.productionservice.service.interfaces.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,27 +23,44 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
 
     @Override
-    public ProductResponseDTO create(ProductRequestDTO t) {
-        return null;
+    public ProductResponseDTO create(ProductRequestDTO requestDTO) {
+        Product product = productMapper.toEntity(requestDTO);
+        Product savedProduct = productRepository.save(product);
+        return productMapper.toResponse(savedProduct);
     }
 
     @Override
-    public ProductResponseDTO update(String id, ProductRequestDTO t) {
-        return null;
+    public ProductResponseDTO update(String id, ProductRequestDTO requestDTO) {
+        Product existedProduct = productRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(id));
+        productMapper.updateEntityFromDTO(requestDTO, existedProduct);
+        return productMapper.toResponse(productRepository.save(existedProduct));
     }
 
     @Override
     public ApiResponse<Void> delete(String id) {
-        return null;
+        if(!isExistById(id)){
+            throw new RecordNotFoundException("Product");
+        }
+        productRepository.deleteById(id);
+        return new ApiResponse<>(true, "Product deleted successfully", null);
     }
 
     @Override
     public ProductResponseDTO findById(String id) {
-        return null;
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Product"));
+        return productMapper.toResponse(product);
     }
 
     @Override
     public List<ProductResponseDTO> findAll() {
-        return List.of();
+        List<Product> products = productRepository.findAll();
+        return products.stream().map(productMapper::toResponse).toList();
+    }
+
+    @Override
+    public Boolean isExistById(String id) {
+        return productRepository.existsById(id);
     }
 }

@@ -12,6 +12,6 @@ import org.mapstruct.MappingTarget;
 public interface ProductMapper {
     ProductResponseDTO toResponse(Product product);
     Product toEntity(ProductRequestDTO productRequestDTO);
-    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "id", ignore = true)
     void updateEntityFromDTO(ProductRequestDTO productRequestDTO, @MappingTarget Product product);
 }

@@ -14,5 +14,5 @@ public class OrderResponseDTO {
     private String id;
     private String supplierId;
     private String status;
-    private List<OrderMaterial> orderMaterials;
+//    private List<OrderMaterial> orderMaterials;
 }

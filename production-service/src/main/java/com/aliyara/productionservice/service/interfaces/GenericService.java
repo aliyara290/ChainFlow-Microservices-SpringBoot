@@ -9,4 +9,5 @@ public interface GenericService<T, P> {
     ApiResponse<Void> delete(String id);
     T findById(String id);
     List<T> findAll();
+    Boolean isExistById(String id);
 }

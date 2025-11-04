@@ -14,18 +14,18 @@ import lombok.NoArgsConstructor;
 public class BOM {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private int id;
+    private String id;
 
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(name = "product_id", nullable = false)
-    private String productId;
+//    @Column(name = "product_id", nullable = false)
+//    private String productId;
 
-    @Column(name = "material_id", nullable = false)
-    private String materialId;
-
-    @ManyToOne
-    @JoinColumn (name = "product_id")
-    private Product product;
+//    @Column(name = "material_id", nullable = false)
+//    private String materialId;
+//
+//    @ManyToOne
+//    @JoinColumn (name = "product_id")
+//    private Product product;
 }

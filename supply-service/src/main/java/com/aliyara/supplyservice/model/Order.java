@@ -21,15 +21,16 @@ public class Order {
     private String id;
 
     @Column(name = "order_date")
-    private LocalDate orderDate = LocalDate.now();
+    private LocalDate orderDate;
 
     @Column(name = "supplier_id", nullable = false)
     private String supplierId;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status = OrderStatus.PENDING;
+    private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @Builder.Default
     private List<OrderMaterial> orderMaterials = new ArrayList<>();
 
     public void addMaterial(Material material, Integer quantity) {
@@ -39,6 +40,7 @@ public class Order {
         orderMaterial.setQuantity(quantity);
 
         this.orderMaterials.add(orderMaterial);
+        material.getOrderMaterials().add(orderMaterial);
     }
 
 }
