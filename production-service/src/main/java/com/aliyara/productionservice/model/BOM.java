@@ -2,14 +2,14 @@ package com.aliyara.productionservice.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table (name = "BillOfMaterials")
 public class BOM {
     @Id
@@ -19,13 +19,11 @@ public class BOM {
     @Column(nullable = false)
     private Integer quantity;
 
-//    @Column(name = "product_id", nullable = false)
-//    private String productId;
 
-//    @Column(name = "material_id", nullable = false)
-//    private String materialId;
-//
-//    @ManyToOne
-//    @JoinColumn (name = "product_id")
-//    private Product product;
+    @Column(name = "material_id", nullable = false)
+    private String materialId;
+
+    @ManyToOne
+    @JoinColumn (name = "product_id")
+    private Product product;
 }
