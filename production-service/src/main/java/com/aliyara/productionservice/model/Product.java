@@ -28,6 +28,6 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-//    @OneToMany(mappedBy = "product")
-//    private List<BOM> BillOfMaterials;
+    @OneToMany(mappedBy = "product")
+    private List<BOM>  boms;
 }

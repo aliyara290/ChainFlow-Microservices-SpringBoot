@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ApiResponse<Void> delete(String id) {
-        if(!isExistById(id)){
+        if(productRepository.existsById(id)){
             throw new RecordNotFoundException("Product");
         }
         productRepository.deleteById(id);
@@ -59,8 +59,4 @@ public class ProductServiceImpl implements ProductService {
         return products.stream().map(productMapper::toResponse).toList();
     }
 
-    @Override
-    public Boolean isExistById(String id) {
-        return productRepository.existsById(id);
-    }
 }

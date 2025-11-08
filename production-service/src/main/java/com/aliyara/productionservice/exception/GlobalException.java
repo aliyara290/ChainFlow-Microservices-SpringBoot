@@ -15,4 +15,16 @@ public class GlobalException {
         ApiResponse<Void> response = new ApiResponse<>(false, ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+
+    @ExceptionHandler(FailedToSaveDataException.class)
+    public ResponseEntity<ApiResponse<Void>> handleFailedToSaveDataException(FailedToSaveDataException ex) {
+        ApiResponse<Void> response = new ApiResponse<>(false, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<Void>> handleException(Exception ex) {
+        ApiResponse<Void> response = new ApiResponse<>(false, "An error occurred" + ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
 }
