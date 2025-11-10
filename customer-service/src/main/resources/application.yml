@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: customer-service
+  datasource:
+    url: jdbc:postgresql://localhost:5434/customer_db
+    username: aliyara29
+    password: Yara2001
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.application.name}
