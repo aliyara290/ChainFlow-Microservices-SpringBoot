@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

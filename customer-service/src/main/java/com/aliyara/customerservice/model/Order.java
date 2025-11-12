@@ -3,20 +3,23 @@ package com.aliyara.customerservice.model;
 
 import com.aliyara.customerservice.model.enums.OrderStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@Builder
 @Entity
-@Table(name = "order")
+@Table(name = "customer_order")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
-
-    @Column(nullable = false)
-    private Integer quantity;
+    private String id;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;

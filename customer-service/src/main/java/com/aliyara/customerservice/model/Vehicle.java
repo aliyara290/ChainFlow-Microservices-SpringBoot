@@ -10,7 +10,7 @@ import lombok.Data;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
 
     @Column(nullable = false, name = "plate_number")
     private String plateNumber;

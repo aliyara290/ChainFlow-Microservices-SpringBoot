@@ -1,4 +1,4 @@
 package com.aliyara.customerservice.service.impl;
 
-public class CustomerServcieImpl {
+public class DeliveryServiceImpl {
 }

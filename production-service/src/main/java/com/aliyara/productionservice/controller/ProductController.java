@@ -3,7 +3,6 @@ package com.aliyara.productionservice.controller;
 
 import com.aliyara.productionservice.dto.request.ProductRequestDTO;
 import com.aliyara.productionservice.dto.response.ProductResponseDTO;
-import com.aliyara.productionservice.model.Product;
 import com.aliyara.productionservice.payload.ApiResponse;
 import com.aliyara.productionservice.service.interfaces.ProductService;
 import jakarta.validation.Valid;
@@ -36,10 +35,10 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductResponseDTO>> getProduct(@PathVariable String id) {
+    public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable String id) {
         ProductResponseDTO product = productService.findById(id);
-        ApiResponse<ProductResponseDTO> response = new ApiResponse<>(true, "Product founded!", product);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+//        ApiResponse<ProductResponseDTO> response = new ApiResponse<>(true, "Product founded!", product);
+        return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
     @GetMapping
@@ -53,5 +52,12 @@ public class ProductController {
     public ResponseEntity<ApiResponse<Void>> deleteProduct(@PathVariable String id) {
         ApiResponse<Void> deletedProduct = productService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(deletedProduct);
+    }
+
+    @PutMapping("/{id}/stock")
+    public ResponseEntity<ApiResponse<Void>> updateStock(@PathVariable String id, @RequestParam Integer quantity) {
+        productService.decreaseStock(id, quantity);
+        ApiResponse<Void> response = new ApiResponse<>(true, "Stock updated successfully!", null);
+        return ResponseEntity.ok().body(response);
     }
 }

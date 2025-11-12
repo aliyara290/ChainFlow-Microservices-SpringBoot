@@ -9,7 +9,7 @@ import lombok.Data;
 public class Customer {
     @Id
     @GeneratedValue (strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String firstName;

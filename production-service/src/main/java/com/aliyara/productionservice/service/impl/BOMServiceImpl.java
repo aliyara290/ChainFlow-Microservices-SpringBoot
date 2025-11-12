@@ -37,7 +37,6 @@ public class BOMServiceImpl implements BOMService {
         for (MaterialsDTO materialDTO : requestDTO.getMaterials()) {
             try {
                 MaterialDTO materialResponse = materialFeignClient.getMaterialById(materialDTO.getMaterialId());
-
                 if (materialResponse == null) {
                     throw new RecordNotFoundException("Material with ID: " + materialDTO.getMaterialId());
                 }
@@ -53,7 +52,6 @@ public class BOMServiceImpl implements BOMService {
                 throw new FailedToSaveDataException("Failed to create BOM: " + e.getMessage());
             }
         }
-
         return new ApiResponse<>(true, "BOM created successfully", null);
     }
 

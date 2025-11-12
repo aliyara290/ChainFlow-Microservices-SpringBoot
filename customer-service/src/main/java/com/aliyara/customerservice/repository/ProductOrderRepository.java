@@ -1,9 +1,9 @@
 package com.aliyara.customerservice.repository;
 
-import com.aliyara.customerservice.model.Adresse;
+import com.aliyara.customerservice.model.ProductOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdresseRepository extends JpaRepository<Adresse, String> {
+public interface ProductOrderRepository extends JpaRepository<ProductOrder, String> {
 }

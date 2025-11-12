@@ -29,5 +29,5 @@ public class Product {
     private Integer stock;
 
     @OneToMany(mappedBy = "product")
-    private List<BOM>  boms;
+    private List<BOM> boms;
 }

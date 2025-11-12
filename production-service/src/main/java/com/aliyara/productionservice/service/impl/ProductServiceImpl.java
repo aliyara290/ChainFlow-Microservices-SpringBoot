@@ -59,4 +59,11 @@ public class ProductServiceImpl implements ProductService {
         return products.stream().map(productMapper::toResponse).toList();
     }
 
+    @Override
+    public void decreaseStock(String productId, Integer quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RecordNotFoundException("Product"));
+        product.setStock(product.getStock() - quantity);
+        productRepository.save(product);
+    }
 }
