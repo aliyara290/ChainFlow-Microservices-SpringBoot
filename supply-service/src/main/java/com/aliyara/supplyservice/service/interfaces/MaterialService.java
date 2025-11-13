@@ -6,4 +6,6 @@ import com.aliyara.supplyservice.dto.response.MaterialResponseDTO;
 import com.aliyara.supplyservice.dto.response.OrderResponseDTO;
 
 public interface MaterialService extends GenericService<MaterialResponseDTO, MaterialRequestDTO> {
+    void increaseMaterialStock(String materialId, int quantity);
+    void decreaseMaterialStock(String materialId, int quantity);
 }
