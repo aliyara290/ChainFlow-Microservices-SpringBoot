@@ -30,7 +30,6 @@ public class Order {
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    @Builder.Default
     private List<OrderMaterial> orderMaterials = new ArrayList<>();
 
     public void addMaterial(Material material, Integer quantity) {

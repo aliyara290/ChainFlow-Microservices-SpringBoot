@@ -2,6 +2,7 @@ package com.aliyara.supplyservice.dto.request;
 
 import lombok.*;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

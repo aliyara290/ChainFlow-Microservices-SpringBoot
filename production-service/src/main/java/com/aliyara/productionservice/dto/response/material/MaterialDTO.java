@@ -2,9 +2,11 @@ package com.aliyara.productionservice.dto.response.material;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Builder
+@ToString
 public class MaterialDTO {
     private String id;
     private String name;

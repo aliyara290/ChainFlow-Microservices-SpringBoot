@@ -11,11 +11,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SupplierRequestDTO {
-    private String id;
     @NotEmpty(message = "First name is required!")
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String firstName;
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String lastName;
     private String phone;
     private String email;

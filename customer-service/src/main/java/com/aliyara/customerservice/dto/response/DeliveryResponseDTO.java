@@ -17,8 +17,8 @@ public class DeliveryResponseDTO {
     private DeliveryStatus status;
     private LocalDate date;
     private Double cost;
-    private AdresseResponseDTO adresse2;
+    private AdresseResponseDTO adresse;
     private VehicleResponseDTO vehicle;
     private DriverResponseDTO driver;
-    private String orderId;
+    private OrderResponseDTO order;
 }

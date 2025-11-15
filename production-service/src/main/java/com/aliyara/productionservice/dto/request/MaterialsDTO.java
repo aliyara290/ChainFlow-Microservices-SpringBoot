@@ -13,6 +13,5 @@ public class MaterialsDTO {
     private String materialId;
 
     @NotNull(message = "Quantity is required")
-    @Positive(message = "Quantity must be positive")
     private Integer quantity;
 }

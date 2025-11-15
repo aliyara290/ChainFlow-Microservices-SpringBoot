@@ -43,11 +43,9 @@ public class MaterialController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<MaterialResponseDTO>> getMaterial(@PathVariable String id) {
+    public ResponseEntity<MaterialResponseDTO> getMaterial(@PathVariable String id) {
         MaterialResponseDTO material = materialService.findById(id);
-        ApiResponse<MaterialResponseDTO> response =
-                new ApiResponse<>(true, "Material found!", material);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(material);
     }
 
     @GetMapping

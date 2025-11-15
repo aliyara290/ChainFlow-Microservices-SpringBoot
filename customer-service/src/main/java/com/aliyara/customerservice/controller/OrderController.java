@@ -18,7 +18,6 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    // CREATE ORDER
     @PostMapping
     public ResponseEntity<ApiResponse<OrderResponseDTO>> createOrder(@RequestBody OrderRequestDTO requestDTO) {
         OrderResponseDTO savedOrder = orderService.create(requestDTO);
@@ -27,7 +26,6 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // GET ALL ORDERS
     @GetMapping
     public ResponseEntity<ApiResponse<List<OrderResponseDTO>>> getAllOrders() {
         List<OrderResponseDTO> orders = orderService.findAll();
@@ -36,7 +34,6 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    // GET ORDER BY ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<OrderResponseDTO>> getOrderById(@PathVariable String id) {
         OrderResponseDTO order = orderService.findById(id);
@@ -45,7 +42,6 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    // UPDATE ORDER
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<OrderResponseDTO>> updateOrder(
             @PathVariable String id,
@@ -57,7 +53,6 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    // DELETE ORDER
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteOrder(@PathVariable String id) {
         orderService.delete(id);

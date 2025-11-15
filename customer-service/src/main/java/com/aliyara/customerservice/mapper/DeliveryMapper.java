@@ -10,7 +10,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring", uses = {AdresseMapper.class, VehicleMapper.class, DriverMapper.class})
 public interface DeliveryMapper {
 
-    @Mapping(source = "order.id", target = "orderId")
+    @Mapping(source = "order.id", target = "id")
     DeliveryResponseDTO toResponse(Delivery delivery);
 
     @Mapping(target = "vehicle", ignore = true)

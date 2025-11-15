@@ -13,15 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderRequestDTO {
-//    @NotNull(message = "Quantity is required")
-//    private Integer quantity;
-
-    @NotNull(message = "Order status is required")
     private OrderStatus orderStatus;
-
-    @NotBlank(message = "Customer ID is required")
     private String customerId;
-
-    @NotNull(message = "Product IDs are required")
     private List<ProductRequestDTO> products;
 }
