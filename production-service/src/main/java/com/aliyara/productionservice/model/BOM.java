@@ -19,7 +19,6 @@ public class BOM {
     @Column(nullable = false)
     private Integer quantity;
 
-
     @Column(name = "material_id", nullable = false)
     private String materialId;
 

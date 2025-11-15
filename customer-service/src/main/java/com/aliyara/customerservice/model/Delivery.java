@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -25,14 +25,18 @@ public class Delivery {
     private double cost;
 
     @OneToOne(fetch = FetchType.EAGER)
-    private Adresse adresse2;
+    @JoinColumn(nullable = false)
+    private Adresse adresse;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
     private Vehicle vehicle;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
     private Driver driver;
 
     @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
     private Order order;
 }

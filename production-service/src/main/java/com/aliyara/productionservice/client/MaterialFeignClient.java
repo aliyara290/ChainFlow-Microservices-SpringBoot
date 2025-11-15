@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface MaterialFeignClient {
 
     @GetMapping("/api/v1/materials/{id}")
-    MaterialDTO getMaterialById(@PathVariable("id") String id);
+    MaterialDTO getMaterialById(@PathVariable String id);
 }

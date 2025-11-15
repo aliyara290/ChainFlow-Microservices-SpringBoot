@@ -9,7 +9,7 @@ import lombok.Data;
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String firstName;
@@ -28,5 +28,4 @@ public class Driver {
 
     @Column(nullable = false, name = "license_number")
     private String licenseNumber;
-
 }

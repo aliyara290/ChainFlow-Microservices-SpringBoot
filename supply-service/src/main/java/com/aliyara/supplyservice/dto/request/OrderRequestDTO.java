@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @Getter
 public class OrderRequestDTO {
-    private String id;
     private String supplierId;
     private List<OrderMaterialRequestDTO> materials;
 }

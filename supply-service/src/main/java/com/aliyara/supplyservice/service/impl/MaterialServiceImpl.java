@@ -15,6 +15,7 @@ import com.aliyara.supplyservice.repository.MaterialRepository;
 import com.aliyara.supplyservice.service.interfaces.MaterialService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +66,19 @@ public class MaterialServiceImpl implements MaterialService {
             throw new NoMaterialsFoundException();
         }
         return materials.stream().map(materialMapper::toResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public void increaseMaterialStock(String materialId, int quantity) {
+        Material material = materialRepository.findById(materialId)
+                .orElseThrow(() -> new MaterialNotFoundException(materialId));
+        material.setStock(material.getStock() + quantity);
+    }
+
+    @Override
+    public void decreaseMaterialStock(String materialId, int quantity) {
+        Material material = materialRepository.findById(materialId)
+                .orElseThrow(() -> new MaterialNotFoundException(materialId));
+        material.setStock(material.getStock() - quantity);
     }
 }

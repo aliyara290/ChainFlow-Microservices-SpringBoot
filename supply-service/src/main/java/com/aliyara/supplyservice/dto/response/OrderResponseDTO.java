@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Builder
@@ -14,5 +15,6 @@ public class OrderResponseDTO {
     private String id;
     private String supplierId;
     private String status;
-//    private List<OrderMaterial> orderMaterials;
+    private LocalDate orderDate;
+    private List<OrderMaterialResponseDTO> orderMaterials;
 }

@@ -26,19 +26,4 @@ public class OrderMaterial {
     @Column (name = "quantity", nullable = false)
     private Integer quantity;
 
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof OrderMaterial)) return false;
-//        OrderMaterial that = (OrderMaterial) o;
-//        return order != null && order.equals(that.getOrder()) &&
-//                material != null && material.equals(that.getMaterial());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return getClass().hashCode();
-//    }
-
 }

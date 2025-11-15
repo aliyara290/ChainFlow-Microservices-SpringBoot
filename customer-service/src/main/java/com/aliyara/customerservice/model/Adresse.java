@@ -26,4 +26,7 @@ public class Adresse {
 
     @Column(nullable = false)
     private String zip;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Customer customer;
 }

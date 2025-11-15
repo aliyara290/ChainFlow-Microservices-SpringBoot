@@ -11,8 +11,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class MaterialRequestDTO {
-    private String id;
-
     @NotBlank(message = "Material name is required")
     private String name;
 

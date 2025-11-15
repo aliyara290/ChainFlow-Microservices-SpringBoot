@@ -7,8 +7,7 @@ import com.aliyara.supplyservice.model.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {OrderMaterialMapper.class})
 public interface OrderMapper {
 
     OrderResponseDTO toResponse(Order order);
