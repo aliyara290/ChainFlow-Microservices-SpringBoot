@@ -19,7 +19,7 @@ pipeline {
 		stage('Build & Test Supply Service') {
 			steps {
 				dir('supply-service') {
-					sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_SERVICE1'
+					sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_SUPPLY_SERVICE'
 					script {
 						docker.withRegistry('', DOCKER_CREDENTIALS) {
 							def image = docker.build("$DOCKER_REGISTRY/supply-service:latest")
@@ -33,7 +33,7 @@ pipeline {
 		stage('Build & Test Production Service') {
 			steps {
 				dir('production-service') {
-					sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_SERVICE2'
+					sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_PRODUCTION_SERVICE'
 					script {
 						docker.withRegistry('', DOCKER_CREDENTIALS) {
 							def image = docker.build("$DOCKER_REGISTRY/production-service:latest")
@@ -47,7 +47,7 @@ pipeline {
 		stage('Build & Test Customer Service') {
 			steps {
 				dir('customer-service') {
-					sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_SERVICE3'
+					sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_CUSTOMER_SERVICE'
 					script {
 						docker.withRegistry('', DOCKER_CREDENTIALS) {
 							def image = docker.build("$DOCKER_REGISTRY/customer-service:latest")
