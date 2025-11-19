@@ -32,5 +32,5 @@ public class Vehicle {
     private VehicleStatus status;
 
     @Column(nullable = false)
-    private Integer year;
+    private Integer modelYear;
 }

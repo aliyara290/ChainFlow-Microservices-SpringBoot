@@ -48,11 +48,6 @@ public class OrderServiceImpl implements OrderService {
 
         try {
             for (ProductRequestDTO product : requestDTO.getProducts()) {
-                ProductResponseDTO productItem = productFeignClient.getProductById(product.getProductId());
-                if (productItem == null) {
-                    throw new ProductNotFoundException("Product with ID " + product.getProductId() + " not found");
-                }
-
                 if (!isInStock(product.getProductId(), product.getQuantity())) {
                     throw new InsufficientStockException("Insufficient stock for product" + product.getProductId());
                 }
@@ -216,7 +211,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             ProductResponseDTO productDTO = productFeignClient.getProductById(productId);
             if (productDTO == null) {
-                return false;
+                throw new ProductNotFoundException("Product with ID " + productId + " not found");
             }
             return productDTO.getStock() != null && productDTO.getStock() >= quantity;
         } catch (Exception e) {

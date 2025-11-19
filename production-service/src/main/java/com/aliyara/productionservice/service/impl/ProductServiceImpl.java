@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ApiResponse<Void> delete(String id) {
-        if(productRepository.existsById(id)){
+        if(!productRepository.existsById(id)){
             throw new RecordNotFoundException("Product");
         }
         productRepository.deleteById(id);
