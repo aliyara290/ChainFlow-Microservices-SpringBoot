@@ -18,5 +18,5 @@ public class VehicleResponseDTO {
     private String brand;
     private Double capacity;
     private VehicleStatus status;
-    private Integer year;
+    private Integer modelYear;
 }

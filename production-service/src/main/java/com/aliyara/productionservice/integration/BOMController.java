@@ -1,4 +1,4 @@
-package com.aliyara.productionservice.controller;
+package com.aliyara.productionservice.integration;
 
 import com.aliyara.productionservice.dto.request.BOMRequestDTO;
 import com.aliyara.productionservice.dto.response.BOMResponseDTO;

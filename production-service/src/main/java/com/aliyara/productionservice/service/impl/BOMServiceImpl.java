@@ -8,6 +8,7 @@ import com.aliyara.productionservice.dto.response.material.MaterialDTO;
 import com.aliyara.productionservice.exception.FailedToSaveDataException;
 import com.aliyara.productionservice.exception.InsufficientStockException;
 import com.aliyara.productionservice.exception.RecordNotFoundException;
+import com.aliyara.productionservice.mapper.BOMMapper;
 import com.aliyara.productionservice.model.BOM;
 import com.aliyara.productionservice.model.Product;
 import com.aliyara.productionservice.payload.ApiResponse;
@@ -33,6 +34,7 @@ public class BOMServiceImpl implements BOMService {
     private final BOMRepository bomRepository;
     private final ProductRepository productRepository;
     private final MaterialFeignClient materialFeignClient;
+    private final BOMMapper bomMapper;
 
     @Override
     public ApiResponse<Void> create(BOMRequestDTO requestDTO) {
@@ -86,8 +88,8 @@ public class BOMServiceImpl implements BOMService {
                 if (materialResponse.getStock() < materialDTO.getQuantity()) {
                     throw new InsufficientStockException(
                             "Material '" + materialResponse.getName() +
-                            "' has insufficient stock. Available: " + materialResponse.getStock() +
-                            ", Required: " + materialDTO.getQuantity()
+                                    "' has insufficient stock. Available: " + materialResponse.getStock() +
+                                    ", Required: " + materialDTO.getQuantity()
                     );
                 }
                 validatedMaterials.add(materialResponse);
@@ -109,43 +111,37 @@ public class BOMServiceImpl implements BOMService {
 
     @Override
     public BOMResponseDTO update(String id, BOMRequestDTO requestDTO) {
-        BOM existingBom = bomRepository.findById(Integer.parseInt(id))
+        BOM existingBom = bomRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("BOM"));
 
         Product product = productRepository.findById(requestDTO.getProductId())
                 .orElseThrow(() -> new RecordNotFoundException("Product"));
 
-        existingBom.setProduct(product);
+        bomMapper.updateEntityFomDTO(requestDTO, existingBom);
         BOM updatedBom = bomRepository.save(existingBom);
 
-        return mapToResponse(updatedBom);
+        return bomMapper.toResponse(updatedBom);
     }
 
     @Override
     public ApiResponse<Void> delete(String id) {
-        if (!bomRepository.existsById(Integer.parseInt(id))) {
+        if (!bomRepository.existsById(id)) {
             throw new RecordNotFoundException("BOM");
         }
-        bomRepository.deleteById(Integer.parseInt(id));
+        bomRepository.deleteById(id);
         return new ApiResponse<>(true, "BOM deleted successfully", null);
     }
 
     @Override
     public BOMResponseDTO findById(String id) {
-        BOM bom = bomRepository.findById(Integer.parseInt(id))
+        BOM bom = bomRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("BOM"));
-        return mapToResponse(bom);
+        return bomMapper.toResponse(bom);
     }
 
     @Override
     public List<BOMResponseDTO> findAll() {
         List<BOM> boms = bomRepository.findAll();
-        return boms.stream().map(this::mapToResponse).collect(Collectors.toList());
-    }
-
-    private BOMResponseDTO mapToResponse(BOM bom) {
-        BOMResponseDTO response = new BOMResponseDTO();
-        // Map fields as needed
-        return response;
+        return boms.stream().map(bomMapper::toResponse).collect(Collectors.toList());
     }
 }

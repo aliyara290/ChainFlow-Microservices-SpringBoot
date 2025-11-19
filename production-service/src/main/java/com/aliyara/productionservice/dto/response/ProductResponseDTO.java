@@ -1,8 +1,12 @@
 package com.aliyara.productionservice.dto.response;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 public class ProductResponseDTO {
     private String id;
     private String name;

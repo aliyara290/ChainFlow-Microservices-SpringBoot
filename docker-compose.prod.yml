@@ -1,0 +1,215 @@
+services:
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8761/actuator/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+  supply-db:
+    image: postgres:15-alpine
+    container_name: supply-db
+    environment:
+      POSTGRES_DB: supply_db
+      POSTGRES_USER: aliyara29
+      POSTGRES_PASSWORD: Yara2001
+    ports:
+      - "5432:5432"
+    volumes:
+      - supply-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U supply_user" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  production-db:
+    image: postgres:15-alpine
+    container_name: production-db
+    environment:
+      POSTGRES_DB: production_db
+      POSTGRES_USER: aliyara29
+      POSTGRES_PASSWORD: Yara2001
+    ports:
+      - "5433:5432"
+    volumes:
+      - production-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U production_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  customer-db:
+    image: postgres:15-alpine
+    container_name: customer-db
+    environment:
+      POSTGRES_DB: customer_db
+      POSTGRES_USER: aliyara29
+      POSTGRES_PASSWORD: Yara2001
+    ports:
+      - "5434:5432"
+    volumes:
+      - customer-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U customer_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - microservices-network
+    depends_on:
+      - supply-db
+      - production-db
+      - customer-db
+
+  sonar-db:
+    image: postgres:15
+    container_name: sonar-db
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonarqube
+    volumes:
+      - sonar-db-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube
+    depends_on:
+      - sonar-db
+    ports:
+      - "9001:9000"
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar-db:5432/sonarqube
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - microservices-network
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    restart: on-failure
+    networks:
+      - microservices-network
+
+  supply-service:
+    build:
+      context: ./supply-service
+      dockerfile: Dockerfile
+    container_name: supply-service
+    ports:
+      - "8081:8081"
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://supply-db:5432/supply_db
+      - SPRING_DATASOURCE_USERNAME=aliyara29
+      - SPRING_DATASOURCE_PASSWORD=Yara2001
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      supply-db:
+        condition: service_healthy
+    restart: on-failure
+
+  production-service:
+    build:
+      context: ./production-service
+      dockerfile: Dockerfile
+    container_name: production-service
+    ports:
+      - "8082:8082"
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://production-db:5432/production_db
+      - SPRING_DATASOURCE_USERNAME=aliyara29
+      - SPRING_DATASOURCE_PASSWORD=Yara2001
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      production-db:
+        condition: service_healthy
+    restart: on-failure
+
+  customer-service:
+    build:
+      context: ./customer-service
+      dockerfile: Dockerfile
+    container_name: customer-service
+    ports:
+      - "8083:8083"
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-db:5432/customer_db
+      - SPRING_DATASOURCE_USERNAME=aliyara29
+      - SPRING_DATASOURCE_PASSWORD=Yara2001
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      customer-db:
+        condition: service_healthy
+    restart: on-failure
+
+networks:
+  microservices-network:
+    driver: bridge
+
+volumes:
+  supply-data:
+  production-data:
+  customer-data:
+  pgadmin-data:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  sonar-db-data:
+  jenkins_home:
