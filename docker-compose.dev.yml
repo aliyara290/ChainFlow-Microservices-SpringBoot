@@ -121,9 +121,11 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker:ro
     restart: on-failure
     environment:
       JAVA_OPTS: "-Xms1g -Xmx3g"
+      DOCKER_HOST: unix:///var/run/docker.sock
     networks:
       - microservices-network
 
