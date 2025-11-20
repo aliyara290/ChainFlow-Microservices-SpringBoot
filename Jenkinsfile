@@ -1,11 +1,16 @@
 pipeline {
 	agent any
 
+	tools {
+		maven 'Maven-3.9.9'
+		jdk 'JDK-17'
+	}
+
 	environment {
 		DOCKER_CREDENTIALS = 'docker-hub-cred'
-		SONAR_SUPPLY_SERVICE = credentials('supply-service')
-		SONAR_PRODUCTION_SERVICE = credentials('production-service')
-		SONAR_CUSTOMER_SERVICE = credentials('customer-service')
+		SONAR_SUPPLY_SERVICE = credentials('SONAR_SUPPLY_SERVICE')
+		SONAR_PRODUCTION_SERVICE = credentials('SONAR_PRODUCTION_SERVICE')
+		SONAR_CUSTOMER_SERVICE = credentials('SONAR_CUSTOMER_SERVICE')
 		DOCKER_REGISTRY = 'aliyara29'
 	}
 
