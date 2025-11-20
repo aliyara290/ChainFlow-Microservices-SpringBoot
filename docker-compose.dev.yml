@@ -110,17 +110,22 @@ services:
       - microservices-network
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: ./jenkins-docker
     container_name: jenkins
+    user: root
     profiles: ["jenkins"]
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker:ro
     restart: on-failure
     environment:
       JAVA_OPTS: "-Xms1g -Xmx3g"
+      DOCKER_HOST: unix:///var/run/docker.sock
     networks:
       - microservices-network
 
