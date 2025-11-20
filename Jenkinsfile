@@ -17,16 +17,7 @@ pipeline {
 	stages {
 		stage('Checkout') {
 			steps {
-				deleteDir()
-
-				git(
-					url: 'https://github.com/aliyara290/supply-chain-microservices.git',
-					branch: 'main',
-					changelog: true,
-					poll: true
-				)
-
-				sh 'ls -la && pwd'
+				checkout scm
 			}
 		}
 
