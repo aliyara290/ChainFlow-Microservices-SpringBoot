@@ -24,9 +24,8 @@ pipeline {
 		stage('Build & Test Supply Service') {
 			steps {
 				dir('supply-service') {
-					sh 'ls -la src/test/resources/'
-					sh 'cat src/test/resources/application-test.yml'
-					sh 'mvn clean verify -DskipITs -X sonar:sonar -Dsonar.login=$SONAR_SUPPLY_SERVICE'
+
+					sh 'mvn clean verify -DskipITs sonar:sonar -Dsonar.host.url=http://host.docker.internal:9001 -Dsonar.login=$SONAR_SUPPLY_SERVICE'
 					script {
 						docker.withRegistry('', DOCKER_CREDENTIALS) {
 							def image = docker.build("$DOCKER_REGISTRY/supply-service:latest")
@@ -40,9 +39,7 @@ pipeline {
 		stage('Build & Test Production Service') {
 			steps {
 				dir('production-service') {
-					sh 'ls -la src/test/resources/'
-					sh 'cat src/test/resources/application-test.yml'
-					sh 'mvn clean verify -DskipITs -X sonar:sonar -Dsonar.login=$SONAR_PRODUCTION_SERVICE'
+					sh 'mvn clean verify -DskipITs sonar:sonar -Dsonar.host.url=http://host.docker.internal:9001 -Dsonar.login=$SONAR_PRODUCTION_SERVICE'
 					script {
 						docker.withRegistry('', DOCKER_CREDENTIALS) {
 							def image = docker.build("$DOCKER_REGISTRY/production-service:latest")
@@ -56,9 +53,7 @@ pipeline {
 		stage('Build & Test Customer Service') {
 			steps {
 				dir('customer-service') {
-					sh 'ls -la src/test/resources/'
-					sh 'cat src/test/resources/application-test.yml'
-					sh 'mvn clean verify -DskipITs -X sonar:sonar -Dsonar.login=$SONAR_CUSTOMER_SERVICE'
+					sh 'mvn clean verify -DskipITs sonar:sonar -Dsonar.host.url=http://host.docker.internal:9001 -Dsonar.login=$SONAR_CUSTOMER_SERVICE'
 					script {
 						docker.withRegistry('', DOCKER_CREDENTIALS) {
 							def image = docker.build("$DOCKER_REGISTRY/customer-service:latest")
