@@ -1,7 +1,6 @@
 package com.aliyara.supplyservice.integration;
 
 import com.aliyara.supplyservice.dto.request.SupplierRequestDTO;
-import com.aliyara.supplyservice.dto.response.SupplierResponseDTO;
 import com.aliyara.supplyservice.model.Supplier;
 import com.aliyara.supplyservice.repository.SupplierRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class SupplierControllerIntegrationTest {
+public class SupplierControllerIT {
 
     @Autowired
     private MockMvc mockMvc;

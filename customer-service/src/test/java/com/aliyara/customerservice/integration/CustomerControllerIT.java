@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class CustomerControllerIntegrationTest {
+public class CustomerControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -196,10 +196,10 @@ public class CustomerControllerIntegrationTest {
     @DisplayName("Test create customer with validation error")
     void testCreateCustomerValidationError() throws Exception {
         CustomerRequestDTO requestDTO = CustomerRequestDTO.builder()
-                .firstName("")  // Invalid: blank
-                .lastName("")   // Invalid: blank
-                .email("invalid-email")  // Invalid: not a valid email
-                .phone("")  // Invalid: blank
+                .firstName("")
+                .lastName("")
+                .email("invalid-email")
+                .phone("")
                 .build();
 
         mockMvc.perform(post("/api/v1/customers")
