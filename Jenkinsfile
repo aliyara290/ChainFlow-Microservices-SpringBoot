@@ -6,6 +6,10 @@ pipeline {
 		jdk 'JDK-17'
 	}
 
+	triggers {
+		githubPush()
+	}
+
 	environment {
 		DOCKER_CREDENTIALS_ID = 'Dockerhub_Cred'
 		SONAR_SUPPLY_SERVICE = credentials('SONAR_SUPPLY_SERVICE')
