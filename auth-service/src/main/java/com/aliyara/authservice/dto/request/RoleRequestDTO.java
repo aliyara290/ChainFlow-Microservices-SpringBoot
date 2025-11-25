@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class RoleRequestDTO {
     @NotBlank(message = "Role name is required")
-    @Size(min = 3, max = 50, message = "Role name must be between 3 and 50 characters")
+    @Size(min = 3, max = 50, message = "Role name must be between 3 and 60 characters")
     private String name;
     private Set<AuthorityRequestDTO> authorities;
 }
