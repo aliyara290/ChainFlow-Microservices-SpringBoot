@@ -22,6 +22,8 @@ public class BOM {
     @Column(name = "material_id", nullable = false)
     private String materialId;
 
+    @Transient
+
     @ManyToOne
     @JoinColumn (name = "product_id")
     private Product product;

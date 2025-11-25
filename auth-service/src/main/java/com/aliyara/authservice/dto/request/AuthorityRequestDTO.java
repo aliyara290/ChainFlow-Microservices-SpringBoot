@@ -16,3 +16,5 @@ public class AuthorityRequestDTO {
     @Size(min = 3, max = 50, message = "Authority name must be between 3 and 50 characters")
     private String name;
 }
+
+

@@ -1,11 +1,15 @@
 package com.aliyara.productionservice.service.impl;
 
+import com.aliyara.productionservice.client.MaterialFeignClient;
 import com.aliyara.productionservice.dto.request.ProductionOrderRequestDTO;
 import com.aliyara.productionservice.dto.response.ProductionOrderResponseDTO;
+import com.aliyara.productionservice.dto.response.material.MaterialDTO;
 import com.aliyara.productionservice.exception.RecordNotFoundException;
 import com.aliyara.productionservice.mapper.ProductionOrderMapper;
+import com.aliyara.productionservice.model.BOM;
 import com.aliyara.productionservice.model.Product;
 import com.aliyara.productionservice.model.ProductionOrder;
+import com.aliyara.productionservice.model.enums.ProductionOrderStatus;
 import com.aliyara.productionservice.payload.ApiResponse;
 import com.aliyara.productionservice.repository.ProductRepository;
 import com.aliyara.productionservice.repository.ProductionOrderRepository;
@@ -26,6 +30,7 @@ public class ProductionOrderServiceImpl implements ProductionOrderService {
     private final ProductionOrderRepository productionOrderRepository;
     private final ProductRepository productRepository;
     private final ProductionOrderMapper productionOrderMapper;
+    private final MaterialFeignClient materialFeignClient;
 
     @Override
     public ProductionOrderResponseDTO create(ProductionOrderRequestDTO requestDTO) {
@@ -84,5 +89,25 @@ public class ProductionOrderServiceImpl implements ProductionOrderService {
         return orders.stream()
                 .map(productionOrderMapper::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void onProduction(String productionOrderId) {
+        ProductionOrder productionOrder = productionOrderRepository.findById(productionOrderId)
+                .orElseThrow(() -> new RecordNotFoundException("Prod"));
+
+        Product product = productionOrder.getProduct();
+
+        List<BOM> boms = product.getBoms();
+
+        for (BOM bom : boms) {
+            MaterialDTO materialDTO = materialFeignClient.getMaterialById(bom.getMaterialId());
+            int decreasedQnt = bom.getQuantity() * productionOrder.getQuantity();
+
+            materialFeignClient.decreaseStock(materialDTO.getId(), decreasedQnt);
+        }
+
+        productionOrder.setStatus(ProductionOrderStatus.IN_PRODUCTION);
+
     }
 }

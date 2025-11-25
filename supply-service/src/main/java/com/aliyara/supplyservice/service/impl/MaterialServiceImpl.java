@@ -77,8 +77,12 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public void decreaseMaterialStock(String materialId, int quantity) {
+
         Material material = materialRepository.findById(materialId)
                 .orElseThrow(() -> new MaterialNotFoundException(materialId));
+        if(material.getStock() < quantity) {
+            throw new RuntimeException("Insufficient quantity");
+        }
         material.setStock(material.getStock() - quantity);
     }
 }

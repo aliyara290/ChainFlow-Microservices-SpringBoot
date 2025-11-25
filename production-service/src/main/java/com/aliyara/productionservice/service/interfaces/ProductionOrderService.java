@@ -15,4 +15,5 @@ public interface ProductionOrderService {
     ApiResponse<Void> delete(String id);
     ProductionOrderResponseDTO  findById(String id);
     List<ProductionOrderResponseDTO> findAll();
+    void onProduction(String productionOrderId);
 }

@@ -18,7 +18,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "roles")

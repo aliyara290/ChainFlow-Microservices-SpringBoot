@@ -52,4 +52,11 @@ public class ProductionOrderController {
         ApiResponse<Void> response = productionOrderService.delete(id);
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/update-status/{id}")
+    public ResponseEntity<ApiResponse<Void>> updateInProduction(@PathVariable String id) {
+        productionOrderService.onProduction(id);
+        ApiResponse<Void> response = new ApiResponse<>(true, "Yes", null);
+        return ResponseEntity.ok(response);
+    }
 }
