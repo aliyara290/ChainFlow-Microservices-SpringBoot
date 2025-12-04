@@ -17,7 +17,7 @@ public class ProductionOrderRequestDTO {
     private String quantity;
 
     @NotNull(message = "Status cannot be null")
-    private ProductionOrderStatus status = ProductionOrderStatus.PENDING;
+    private ProductionOrderStatus status;
 
     @NotBlank(message = "Start date is required")
     private String startDate;

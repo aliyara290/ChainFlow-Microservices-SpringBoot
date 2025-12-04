@@ -96,14 +96,14 @@ public class OrderServiceImpl implements OrderService {
     public boolean updateOrderStatus(String oderId, String status) {
         Order order = orderRepository.findById(oderId)
                 .orElseThrow(() -> new OrderNotFoundException(oderId));
-        order.setStatus(OrderStatus.valueOf(status));
         if (order.getStatus() != OrderStatus.RECEIVED && OrderStatus.RECEIVED.name().equalsIgnoreCase(status)) {
             for (OrderMaterial orderMaterial : order.getOrderMaterials()) {
                 Material material = orderMaterial.getMaterial();
                 material.setStock(material.getStock() + orderMaterial.getQuantity());
             }
         }
-        orderRepository.saveAndFlush(order);
+        order.setStatus(OrderStatus.valueOf(status));
+        orderRepository.save(order);
         return true;
     }
 }

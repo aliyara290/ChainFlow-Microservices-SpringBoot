@@ -5,6 +5,7 @@ import com.aliyara.supplyservice.dto.response.MaterialResponseDTO;
 import com.aliyara.supplyservice.payload.ApiResponse;
 import com.aliyara.supplyservice.service.interfaces.MaterialService;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,4 +56,13 @@ public class MaterialController {
                 new ApiResponse<>(true, "Materials list", materials);
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/stock/{id}/{quantity}")
+    public ResponseEntity<ApiResponse<Void>> decreaseStock(@PathVariable String id, @PathVariable int quantity) {
+        materialService.decreaseMaterialStock(id, quantity);
+        ApiResponse<Void> response =
+                new ApiResponse<>(true, "Material decreased successfully!", null);
+        return ResponseEntity.ok(response);
+    }
 }
+

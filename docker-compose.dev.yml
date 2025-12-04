@@ -1,12 +1,33 @@
 services:
+
+  auth-db:
+    image: postgres:15-alpine
+    container_name: auth-db
+    profiles: ["default", "all"]
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5435:5432"
+    volumes:
+      - auth-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U aliyara29" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   supply-db:
     image: postgres:15-alpine
     container_name: supply-db
-    profiles: ["default"]
+    profiles: ["default", "all"]
     environment:
       POSTGRES_DB: supply_db
-      POSTGRES_USER: aliyara29
-      POSTGRES_PASSWORD: Yara2001
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -14,7 +35,7 @@ services:
     networks:
       - microservices-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U supply_user" ]
+      test: [ "CMD-SHELL", "pg_isready -U aliyara29" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -22,11 +43,11 @@ services:
   production-db:
     image: postgres:15-alpine
     container_name: production-db
-    profiles: ["default"]
+    profiles: ["default", "all"]
     environment:
       POSTGRES_DB: production_db
-      POSTGRES_USER: aliyara29
-      POSTGRES_PASSWORD: Yara2001
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5433:5432"
     volumes:
@@ -34,7 +55,7 @@ services:
     networks:
       - microservices-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U production_user"]
+      test: ["CMD-SHELL", "pg_isready -U aliyara29"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -42,11 +63,11 @@ services:
   customer-db:
     image: postgres:15-alpine
     container_name: customer-db
-    profiles: ["default"]
+    profiles: ["default", "all"]
     environment:
       POSTGRES_DB: customer_db
-      POSTGRES_USER: aliyara29
-      POSTGRES_PASSWORD: Yara2001
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5434:5432"
     volumes:
@@ -54,7 +75,7 @@ services:
     networks:
       - microservices-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U customer_user"]
+      test: ["CMD-SHELL", "pg_isready -U aliyara29"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -62,7 +83,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
-    profiles: ["pg"]
+    profiles: ["default", "all"]
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
@@ -73,6 +94,7 @@ services:
     networks:
       - microservices-network
     depends_on:
+      - auth-db
       - supply-db
       - production-db
       - customer-db
@@ -80,7 +102,7 @@ services:
   sonar-db:
     image: postgres:15
     container_name: sonar-db
-    profiles: ["sonar"]
+    profiles: ["sonar", "all"]
     environment:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar
@@ -93,7 +115,7 @@ services:
   sonarqube:
     image: sonarqube:community
     container_name: sonarqube
-    profiles: ["sonar"]
+    profiles: ["sonar", "all"]
     depends_on:
       - sonar-db
     ports:
@@ -114,7 +136,7 @@ services:
       context: ./jenkins-docker
     container_name: jenkins
     user: root
-    profiles: ["jenkins"]
+    profiles: [ "jenkins", "all"]
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -134,6 +156,7 @@ networks:
     driver: bridge
 
 volumes:
+  auth-data:
   supply-data:
   production-data:
   customer-data:
