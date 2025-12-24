@@ -13,6 +13,7 @@ public interface MaterialFeignClient {
 
     @GetMapping("/api/v1/materials/{id}")
     MaterialDTO getMaterialById(@PathVariable String id);
+
     @PutMapping("/api/v1/materials/stock/{id}/{quantity}")
     void decreaseStock(@PathVariable String id, @PathVariable int quantity);
 }
