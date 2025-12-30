@@ -29,6 +29,10 @@ eureka:
     prefer-ip-address: true
     hostname: ${spring.application.name}
 
+jwt:
+  secret: ${JWT_SECRET:your-256-bit-secret-key-must-be-at-least-32-characters-long-for-security}
+  expiration: ${JWT_EXPIRATION:86400000} # 24 hours in milliseconds
+
 logging:
   level:
     root: INFO
@@ -36,3 +40,5 @@ logging:
     org.springframework.security: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  file:
+    name: app.log

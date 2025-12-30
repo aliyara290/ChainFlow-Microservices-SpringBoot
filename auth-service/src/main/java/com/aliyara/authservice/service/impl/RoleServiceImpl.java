@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.util.HashSet;
 import java.util.List;
@@ -41,7 +42,6 @@ public class RoleServiceImpl implements RoleService {
 
         Role role = roleMapper.toEntity(requestDTO);
 
-        // Handle authorities
         if (requestDTO.getAuthorities() != null && !requestDTO.getAuthorities().isEmpty()) {
             Set<Authority> authorities = new HashSet<>();
             for (AuthorityRequestDTO authorityDTO : requestDTO.getAuthorities()) {
@@ -72,7 +72,6 @@ public class RoleServiceImpl implements RoleService {
 
         role.setName(requestDTO.getName());
 
-        // Update authorities
         if (requestDTO.getAuthorities() != null) {
             Set<Authority> authorities = new HashSet<>();
             for (AuthorityRequestDTO authorityDTO : requestDTO.getAuthorities()) {
