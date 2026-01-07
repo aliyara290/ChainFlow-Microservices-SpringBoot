@@ -138,7 +138,7 @@ services:
     user: root
     profiles: [ "jenkins", "all"]
     ports:
-      - "8080:8080"
+      - "8089:8080"
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
@@ -148,6 +148,29 @@ services:
     environment:
       JAVA_OPTS: "-Xms1g -Xmx3g"
       DOCKER_HOST: unix:///var/run/docker.sock
+    networks:
+      - microservices-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.1
+    container_name: keycloak
+    profiles: [ "default", "all", ]
+    command: start-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://auth-db:5432/auth_db
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+
+      KC_HTTP_PORT: 8080
+    ports:
+      - "8090:8080"
+    depends_on:
+      auth-db:
+        condition: service_healthy
     networks:
       - microservices-network
 
