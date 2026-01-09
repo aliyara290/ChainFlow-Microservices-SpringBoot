@@ -13,30 +13,32 @@ spring:
 
   cloud:
     gateway:
-      routes:
-        - id: customer-service
-          uri: lb://customer-service
-          predicates:
-            - Path=/customer/**
-          filters:
-            - TokenRelay
-            - StripPrefix=1
-
-        - id: production-service
-          uri: lb://production-service
-          predicates:
-            - Path=/production/**
-          filters:
-            - TokenRelay
-            - StripPrefix=1
-
-        - id: supply-service
-          uri: lb://supply-service
-          predicates:
-            - Path=/supply/**
-          filters:
-            - TokenRelay
-            - StripPrefix=1
+      # Routes are configured programmatically in GatewayConfig.java for WebMVC Gateway
+      # YAML configuration is not fully supported in spring-cloud-starter-gateway-server-webmvc
+      routes: []
+#        - id: customer-service
+#          uri: lb://customer-service
+#          predicates:
+#            - Path=/customer/**
+#          filters:
+#            - TokenRelay
+#            - StripPrefix=1
+#
+#        - id: production-service
+#          uri: lb://production-service
+#          predicates:
+#            - Path=/production/**
+#          filters:
+#            - TokenRelay
+#            - StripPrefix=1
+#
+#        - id: supply-service
+#          uri: lb://SUPPLY-SERVICE
+#          predicates:
+#            - Path=/supply/**
+#          filters:
+#            - TokenRelay
+#            - StripPrefix=1
 
 eureka:
   client:
@@ -51,4 +53,13 @@ logging:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.security: DEBUG
     org.springframework.web.reactive: DEBUG
-    org.springframework.cloud.gateway.filter: DEBUG
+    reactor.netty: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health,info,routes
+  endpoint:
+    gateway:
+      enabled: true
