@@ -1,4 +1,4 @@
-# SupplyChainX Pro - Microservices Architecture
+# ChainFlow - Microservices Architecture
 
 ## 📋 Table of Contents
 - [Overview](#overview)
@@ -15,7 +15,7 @@
 
 ## 🎯 Overview
 
-**SupplyChainX Pro** is a comprehensive supply chain management system built with a microservices architecture. The platform provides end-to-end supply chain management from raw material procurement to finished product delivery, featuring seamless integration between procurement, production, and customer delivery modules.
+**ChainFlow** is a comprehensive supply chain management system built with a microservices architecture. The platform provides end-to-end supply chain management from raw material procurement to finished product delivery, featuring seamless integration between procurement, production, and customer delivery modules.
 
 ### Key Features
 - **Procurement Management**: Supplier management, raw materials tracking, and supply order processing
@@ -181,8 +181,8 @@ Manages customer relationships, orders, and delivery logistics.
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-org/supplychainx-pro.git
-cd supplychainx-pro
+git clone https://github.com/your-org/ChainFlow-pro.git
+cd ChainFlow-pro
 ```
 
 ### 2. Configure Application Properties
@@ -354,8 +354,8 @@ This project is licensed under the MIT License.
 
 ## 📧 Contact
 
-For questions or support, please contact: support@supplychainx-pro.com
+For questions or support, please contact: support@ChainFlow-pro.com
 
 ---
 
-**SupplyChainX Pro** - Powering Modern Supply Chain Management 🚀
+**ChainFlow** - Powering Modern Supply Chain Management 🚀
