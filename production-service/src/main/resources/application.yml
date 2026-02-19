@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: production-service
+
   datasource:
     #    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://supply-db:5432/supply_db}
     #    username: ${SPRING_DATASOURCE_USERNAME:aliyara29}
@@ -20,6 +21,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/supply-chain-system
 
 eureka:
   client:

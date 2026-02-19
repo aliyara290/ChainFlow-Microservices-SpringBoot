@@ -31,8 +31,8 @@ eureka:
 
 logging:
   level:
-    root: INFO  # Default level for all packages
-    com.aliyara.authservice: DEBUG  # Your application logs (detailed)
-    org.springframework.security: INFO  # Spring Security (change to DEBUG if troubleshooting)
-    org.hibernate.SQL: DEBUG  # Shows SQL queries
+    root: INFO
+    com.aliyara.authservice: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
