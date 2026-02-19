@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: customer-service
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/supply-chain-system
+
   datasource:
     url: jdbc:postgresql://localhost:5434/customer_db
     username: aliyara29
@@ -16,6 +23,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
 eureka:
   client:
     serviceUrl:

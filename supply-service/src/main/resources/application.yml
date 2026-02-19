@@ -22,6 +22,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/supply-chain-system
+
 eureka:
   client:
     serviceUrl:
@@ -31,3 +37,12 @@ eureka:
   instance:
     prefer-ip-address: true
     hostname: ${spring.application.name}
+
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web.reactive: DEBUG
+    org.springframework.cloud.gateway.filter: DEBUG
